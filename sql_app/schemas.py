@@ -3,6 +3,15 @@ from typing import Union
 from pydantic import BaseModel
 
 
+class Token(BaseModel):
+    access_token: str
+    token_type: str
+
+
+class TokenData(BaseModel):
+    username: Union[str, None] = None
+
+
 class ItemBase(BaseModel):
     title: str
     description: Union[str, None] = None
@@ -14,7 +23,7 @@ class ItemCreate(ItemBase):
 
 class Item(ItemBase):
     id: int
-    owner_id: int
+    owner_id: Union[int, None] = None
 
     class Config:
         orm_mode = True
@@ -22,6 +31,7 @@ class Item(ItemBase):
 
 class UserBase(BaseModel):
     email: str
+    username: str
 
 
 class UserCreate(UserBase):
